@@ -52,6 +52,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 )
               : Resultado(
                   pontuacaoFinal: _pontuacaoTotal,
+                  totalPerguntas: _perguntas.length,
                   onReiniciar: _reiniciar,
                 ),
         ),

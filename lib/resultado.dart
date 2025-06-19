@@ -5,9 +5,11 @@ class Resultado extends StatelessWidget {
     super.key,
     required this.onReiniciar,
     required this.pontuacaoFinal,
+    required this.totalPerguntas,
   });
 
   final int pontuacaoFinal;
+  final int totalPerguntas;
   final void Function() onReiniciar;
 
   @override
@@ -21,7 +23,7 @@ class Resultado extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          'Pontuação: $pontuacaoFinal',
+          'Pontuação: ${pontuacaoFinal / totalPerguntas * 100}%',
           style: TextStyle(fontSize: 16),
           textAlign: TextAlign.center,
         ),
