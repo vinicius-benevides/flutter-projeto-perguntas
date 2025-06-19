@@ -38,6 +38,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Quiz Flutter',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade700),
         textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: 'Roboto')),
