@@ -64,16 +64,31 @@ class _PerguntaAppState extends State<PerguntaApp> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: temMaisPerguntas
-                    ? Questionario(
-                        pergunta: _perguntas[_perguntaSelecionada],
-                        onResponder: _responder,
-                      )
-                    : Resultado(
-                        pontuacaoFinal: _pontuacaoTotal,
-                        totalPerguntas: _perguntas.length,
-                        onReiniciar: _reiniciar,
-                      ),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
+                        );
+                      },
+                  child: temMaisPerguntas
+                      ? Questionario(
+                          key: ValueKey(_perguntaSelecionada),
+                          pergunta: _perguntas[_perguntaSelecionada],
+                          onResponder: _responder,
+                        )
+                      : Resultado(
+                          key: const ValueKey('resultado'),
+                          pontuacaoFinal: _pontuacaoTotal,
+                          totalPerguntas: _perguntas.length,
+                          onReiniciar: _reiniciar,
+                        ),
+                ),
               ),
             ),
           ),
