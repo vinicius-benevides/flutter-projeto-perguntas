@@ -16,7 +16,7 @@ class Questionario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 10,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Questao(texto: pergunta.texto),
         ...pergunta.respostas.map(

@@ -14,28 +14,36 @@ class Resultado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final percentual = (pontuacaoFinal / totalPerguntas * 100).round();
+
     return Column(
-      spacing: 10,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          'Você completou todas as perguntas!',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        const Text(
+          'Parabéns!',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 16),
         Text(
-          'Pontuação: ${pontuacaoFinal / totalPerguntas * 100}%',
-          style: TextStyle(fontSize: 16),
+          'Você concluiu o quiz com $percentual% de acertos.',
+          style: const TextStyle(fontSize: 16),
           textAlign: TextAlign.center,
         ),
-        ElevatedButton(
+        const SizedBox(height: 24),
+        ElevatedButton.icon(
           onPressed: onReiniciar,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.green.shade600,
             foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            textStyle: TextStyle(fontSize: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            textStyle: const TextStyle(fontSize: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          child: Text('Reiniciar'),
+          icon: const Icon(Icons.restart_alt),
+          label: const Text('Reiniciar Quiz'),
         ),
       ],
     );

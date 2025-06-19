@@ -4,7 +4,7 @@ import 'package:projeto_perguntas/resultado.dart';
 import 'package:projeto_perguntas/types.dart';
 import 'package:projeto_perguntas/utils/perguntas.dart';
 
-main() => runApp(PerguntaApp());
+void main() => runApp(const PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
@@ -12,9 +12,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   final List<Pergunta> _perguntas = List.from(perguntas);
 
-  bool get temMaisPerguntas {
-    return _perguntaSelecionada < _perguntas.length;
-  }
+  bool get temMaisPerguntas => _perguntaSelecionada < _perguntas.length;
 
   void _responder(Resposta resposta) {
     if (!temMaisPerguntas) return;
@@ -29,7 +27,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
     setState(() {
       _perguntaSelecionada = 0;
       _pontuacaoTotal = 0;
-
       _perguntas.shuffle();
       for (var pergunta in _perguntas) {
         pergunta.respostas.shuffle();
@@ -40,21 +37,46 @@ class _PerguntaAppState extends State<PerguntaApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Quiz Flutter',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade700),
+        textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: 'Roboto')),
+        useMaterial3: true,
+      ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Perguntas')),
+        appBar: AppBar(
+          title: const Text(
+            'Quiz Flutter',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.blue.shade700,
+          foregroundColor: Colors.white,
+        ),
         body: Container(
           width: double.infinity,
-          margin: const EdgeInsets.all(16.0),
-          child: temMaisPerguntas
-              ? Questionario(
-                  pergunta: _perguntas[_perguntaSelecionada],
-                  onResponder: _responder,
-                )
-              : Resultado(
-                  pontuacaoFinal: _pontuacaoTotal,
-                  totalPerguntas: _perguntas.length,
-                  onReiniciar: _reiniciar,
-                ),
+          padding: const EdgeInsets.all(24),
+          child: Center(
+            child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: temMaisPerguntas
+                    ? Questionario(
+                        pergunta: _perguntas[_perguntaSelecionada],
+                        onResponder: _responder,
+                      )
+                    : Resultado(
+                        pontuacaoFinal: _pontuacaoTotal,
+                        totalPerguntas: _perguntas.length,
+                        onReiniciar: _reiniciar,
+                      ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -63,7 +85,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
 class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
-
   @override
-  State<StatefulWidget> createState() => _PerguntaAppState();
+  State<PerguntaApp> createState() => _PerguntaAppState();
 }
