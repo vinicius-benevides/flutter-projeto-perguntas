@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Resposta extends StatelessWidget {
-  const Resposta({super.key, required this.texto, required this.onPressed});
+class Opcao extends StatelessWidget {
+  const Opcao({super.key, required this.texto, required this.onPressed});
 
   final String texto;
   final void Function() onPressed;
@@ -14,16 +14,15 @@ class Resposta extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
-          padding: const EdgeInsets.only(
-            top: 4.0,
-            bottom: 4.0,
-            left: 36.0,
-            right: 36.0,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           textStyle: const TextStyle(fontSize: 12),
         ),
         onPressed: onPressed,
-        child: Text(texto),
+        child: Text(
+          texto,
+          style: const TextStyle(fontSize: 14),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

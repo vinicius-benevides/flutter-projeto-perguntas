@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Resultado extends StatelessWidget {
-  const Resultado({super.key, required this.onReiniciar});
+  const Resultado({
+    super.key,
+    required this.onReiniciar,
+    required this.pontuacaoFinal,
+  });
 
+  final int pontuacaoFinal;
   final void Function() onReiniciar;
 
   @override
@@ -13,6 +18,11 @@ class Resultado extends StatelessWidget {
         Text(
           'Você completou todas as perguntas!',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          'Pontuação: $pontuacaoFinal',
+          style: TextStyle(fontSize: 16),
           textAlign: TextAlign.center,
         ),
         ElevatedButton(

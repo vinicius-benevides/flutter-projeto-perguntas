@@ -1,49 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_perguntas/questao.dart';
-import 'package:projeto_perguntas/resposta.dart';
+import 'package:projeto_perguntas/questionario.dart';
 import 'package:projeto_perguntas/resultado.dart';
+import 'package:projeto_perguntas/types.dart';
+import 'package:projeto_perguntas/utils/perguntas.dart';
 
 main() => runApp(PerguntaApp());
 
-class Pergunta {
-  final String texto;
-  final List<String> respostas;
-
-  Pergunta({required this.texto, required this.respostas});
-}
-
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
-  final List<Pergunta> _perguntas = [
-    Pergunta(
-      texto: 'Qual é a sua cor favorita?',
-      respostas: const ['Azul', 'Verde', 'Vermelho'],
-    ),
-    Pergunta(
-      texto: 'Qual é o seu animal favorito?',
-      respostas: const ['Cachorro', 'Gato', 'Pássaro'],
-    ),
-    Pergunta(
-      texto: 'Qual é o seu esporte favorito?',
-      respostas: const ['Futebol', 'Basquete', 'Vôlei', 'Natação'],
-    ),
-  ];
+  var _pontuacaoTotal = 0;
+
+  final List<Pergunta> _perguntas = List.from(perguntas);
 
   bool get temMaisPerguntas {
     return _perguntaSelecionada < _perguntas.length;
   }
 
-  void _responder() {
+  void _responder(Resposta resposta) {
     if (!temMaisPerguntas) return;
 
     setState(() {
       _perguntaSelecionada++;
+      _pontuacaoTotal += resposta.pontuacao;
     });
   }
 
   void _reiniciar() {
     setState(() {
       _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+
+      _perguntas.shuffle();
+      for (var pergunta in _perguntas) {
+        pergunta.respostas.shuffle();
+      }
     });
   }
 
@@ -56,16 +46,14 @@ class _PerguntaAppState extends State<PerguntaApp> {
           width: double.infinity,
           margin: const EdgeInsets.all(16.0),
           child: temMaisPerguntas
-              ? Column(
-                  spacing: 10,
-                  children: [
-                    Questao(texto: _perguntas[_perguntaSelecionada].texto),
-                    ..._perguntas[_perguntaSelecionada].respostas.map(
-                      (texto) => Resposta(texto: texto, onPressed: _responder),
-                    ),
-                  ],
+              ? Questionario(
+                  pergunta: _perguntas[_perguntaSelecionada],
+                  onResponder: _responder,
                 )
-              : Resultado(onReiniciar: _reiniciar),
+              : Resultado(
+                  pontuacaoFinal: _pontuacaoTotal,
+                  onReiniciar: _reiniciar,
+                ),
         ),
       ),
     );
